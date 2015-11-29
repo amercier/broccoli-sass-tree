@@ -7,19 +7,17 @@ chai.use(chaiAsPromised);
 
 describe('broccoli-sass', () => {
 
-  // it('compiles .scss files', () => {
+  it('compiles .scss files', () => {
 
-  //   const inputNode = new fixture.Node({
-  //     'app.scss': 'html { body { font: Helvetica; } }'
-  //   });
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }'
+    });
 
-  //   const node = new BroccoliSass([inputNode]);
+    const node = new BroccoliSass([inputNode]);
 
-  //   return expect(fixture.build(node)).to.eventually.deep.equal({
-  //     'assets': {
-  //       'app.css': 'html body {\n  font: Helvetica; }\n'
-  //     }
-  //   });
-  // });
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'app.css': 'html body {\n  font: Helvetica; }\n'
+    });
+  });
 
 });
