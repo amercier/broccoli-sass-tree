@@ -34,8 +34,7 @@ export default class SassDir extends Plugin {
       listFiles(dir, (err, files) => {
         if (err) {
           reject(err);
-        }
-        else {
+        } else {
           resolve(files.map(absolutePath => relative(dir, absolutePath)));
         }
       });
@@ -53,14 +52,14 @@ export default class SassDir extends Plugin {
   }
 
   renderFile(inputPath, relativePath, outputPath) {
-    const inputFilePath = join(inputPath, relativePath),
-      outputFilePath = join(outputPath, this.getOutputCssPath(relativePath));
+    const inputFilePath = join(inputPath, relativePath);
+    const outputFilePath = join(outputPath, this.getOutputCssPath(relativePath));
 
     return Promise.all([
-        this.renderSass(inputFilePath, outputFilePath),
-        this.makeDir(dirname(outputFilePath))
-      ])
-      .then(([result]) => this.writeFile(outputFilePath, result.css));
+      this.renderSass(inputFilePath, outputFilePath),
+      this.makeDir(dirname(outputFilePath)),
+    ])
+    .then(([result]) => this.writeFile(outputFilePath, result.css));
   }
 
   getOutputCssPath(relativePath) {
@@ -71,26 +70,24 @@ export default class SassDir extends Plugin {
     return new Promise((resolve, reject) => {
       const options = merge({}, this.options, {
         file: inputFilePath,
-        outFile: outputFilePath
+        outFile: outputFilePath,
       });
       render(options, (err, result) => {
         if (err) {
           reject(err);
-        }
-        else {
+        } else {
           resolve(result);
         }
-      })
+      });
     });
   }
 
   makeDir(path) {
     return new Promise((resolve, reject) => {
-      mkdirp(path, function(err) {
-        if(err) {
+      mkdirp(path, err => {
+        if (err) {
           reject(err);
-        }
-        else {
+        } else {
           resolve(path);
         }
       });
@@ -99,11 +96,10 @@ export default class SassDir extends Plugin {
 
   writeFile(path, contents) {
     return new Promise((resolve, reject) => {
-      writeFile(path, contents, function(err) {
-        if(err) {
+      writeFile(path, contents, err => {
+        if (err) {
           reject(err);
-        }
-        else {
+        } else {
           resolve(contents);
         }
       });
