@@ -5,7 +5,7 @@ import chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
 
-describe('broccoli-sass', () => {
+describe('broccoli-sass-dir', () => {
 
   it('compiles .scss files', () => {
     const inputNode = new fixture.Node({

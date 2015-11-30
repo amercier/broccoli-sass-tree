@@ -8,7 +8,7 @@ import { files as listFiles } from 'node-dir';
 import { render } from 'node-sass';
 import { Promise } from 'rsvp';
 
-export default class SassCompiler extends Plugin {
+export default class SassDir extends Plugin {
 
   constructor(inputNodes, options) {
     super(inputNodes, options);
