@@ -55,4 +55,14 @@ describe('broccoli-sass', () => {
       }
     });
   });
+
+  it('throws an error on Syntax error', () => {
+    const inputNode = new fixture.Node({
+        'app.scss': 'html { body { font: Helvetica; } ]'
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.be.rejectedWith(
+      Error, 'Invalid CSS after "...t: Helvetica; }": expected "{", was "]"'
+    );
+  });
 });
