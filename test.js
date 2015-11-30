@@ -8,16 +8,35 @@ chai.use(chaiAsPromised);
 describe('broccoli-sass', () => {
 
   it('compiles .scss files', () => {
-
     const inputNode = new fixture.Node({
-      'app.scss': 'html { body { font: Helvetica; } }'
-    });
-
-    const node = new BroccoliSass([inputNode]);
-
+        'app.scss': 'html { body { font: Helvetica; } }'
+      }),
+      node = new BroccoliSass([inputNode]);
     return expect(fixture.build(node)).to.eventually.deep.equal({
       'app.css': 'html body {\n  font: Helvetica; }\n'
     });
   });
 
+  it('resolves @import statements', () => {
+    const inputNode = new fixture.Node({
+        'app1.scss': 'html { body { font: Helvetica; } }',
+        'app2.scss': '@import "app1";'
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'app1.css': 'html body {\n  font: Helvetica; }\n',
+      'app2.css': 'html body {\n  font: Helvetica; }\n'
+    });
+  });
+
+  it('does not render templates', () => {
+    const inputNode = new fixture.Node({
+        'my_app.scss': '@import "template";',
+        '_template.scss': 'html { body { font: Helvetica; } }'
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'my_app.css': 'html body {\n  font: Helvetica; }\n'
+    });
+  });
 });
