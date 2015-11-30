@@ -21,6 +21,8 @@
     "broccoli-fixture": "^0.1.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
+    "eslint": "^1.10.2",
+    "eslint-config-airbnb": "^1.0.2",
     "mocha": "^2.3.4"
   }
 }
