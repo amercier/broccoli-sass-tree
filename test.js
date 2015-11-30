@@ -5,21 +5,64 @@ import chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
 
-describe('broccoli-sass', () => {
+describe('broccoli-sass-dir', () => {
 
-  // it('compiles .scss files', () => {
+  it('compiles .scss files', () => {
+    const inputNode = new fixture.Node({
+        'app.scss': 'html { body { font: Helvetica; } }'
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'app.css': 'html body {\n  font: Helvetica; }\n'
+    });
+  });
 
-  //   const inputNode = new fixture.Node({
-  //     'app.scss': 'html { body { font: Helvetica; } }'
-  //   });
+  it('resolves @import statements', () => {
+    const inputNode = new fixture.Node({
+        'app1.scss': 'html { body { font: Helvetica; } }',
+        'app2.scss': '@import "app1";'
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'app1.css': 'html body {\n  font: Helvetica; }\n',
+      'app2.css': 'html body {\n  font: Helvetica; }\n'
+    });
+  });
 
-  //   const node = new BroccoliSass([inputNode]);
+  it('does not render templates', () => {
+    const inputNode = new fixture.Node({
+        'my_app.scss': '@import "template";',
+        '_template.scss': 'html { body { font: Helvetica; } }'
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'my_app.css': 'html body {\n  font: Helvetica; }\n'
+    });
+  });
 
-  //   return expect(fixture.build(node)).to.eventually.deep.equal({
-  //     'assets': {
-  //       'app.css': 'html body {\n  font: Helvetica; }\n'
-  //     }
-  //   });
-  // });
+  it('preserves directory structure', () => {
+    const inputNode = new fixture.Node({
+        'app1.scss': 'html { body { font: Helvetica; } }',
+        'subdir': {
+          'app2.scss': '@import "../app1";'
+        }
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'app1.css': 'html body {\n  font: Helvetica; }\n',
+      'subdir': {
+        'app2.css': 'html body {\n  font: Helvetica; }\n'
+      }
+    });
+  });
 
+  it('throws an error on Syntax error', () => {
+    const inputNode = new fixture.Node({
+        'app.scss': 'html { body { font: Helvetica; } ]'
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.be.rejectedWith(
+      Error, 'Invalid CSS after "...t: Helvetica; }": expected "{", was "]"'
+    );
+  });
 });
