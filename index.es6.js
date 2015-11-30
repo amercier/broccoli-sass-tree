@@ -1,5 +1,5 @@
 import { writeFile } from 'fs';
-import { join, relative } from 'path';
+import { basename, join, relative } from 'path';
 
 import Plugin from 'broccoli-plugin';
 import { merge } from 'lodash';
@@ -20,7 +20,11 @@ export default class SassCompiler extends Plugin {
 
   renderDir(inputPath, outputPath) {
     return this.readFiles(inputPath).then(
-      files => this.renderFiles(inputPath, files, outputPath)
+      files => this.renderFiles(
+        inputPath,
+        files.filter(this.filterFile.bind(this)),
+        outputPath
+      )
     );
   }
 
@@ -35,6 +39,10 @@ export default class SassCompiler extends Plugin {
         }
       });
     });
+  }
+
+  filterFile(relativePath) {
+    return !basename(relativePath).startsWith('_');
   }
 
   renderFiles(inputPath, relativePaths, outputPath) {
