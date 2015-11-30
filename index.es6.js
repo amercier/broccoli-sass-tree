@@ -1,8 +1,9 @@
 import { writeFile } from 'fs';
-import { basename, join, relative } from 'path';
+import { basename, dirname, join, relative } from 'path';
 
 import Plugin from 'broccoli-plugin';
 import { merge } from 'lodash';
+import mkdirp from 'mkdirp';
 import { files as listFiles } from 'node-dir';
 import { render } from 'node-sass';
 import { Promise } from 'rsvp';
@@ -55,8 +56,11 @@ export default class SassCompiler extends Plugin {
     const inputFilePath = join(inputPath, relativePath),
       outputFilePath = join(outputPath, this.getOutputCssPath(relativePath));
 
-    return this.renderSass(inputFilePath, outputFilePath)
-      .then((result) => this.writeFile(outputFilePath, result.css));
+    return Promise.all([
+        this.renderSass(inputFilePath, outputFilePath),
+        this.makeDir(dirname(outputFilePath))
+      ])
+      .then(([result]) => this.writeFile(outputFilePath, result.css));
   }
 
   getOutputCssPath(relativePath) {
@@ -77,6 +81,19 @@ export default class SassCompiler extends Plugin {
           resolve(result);
         }
       })
+    });
+  }
+
+  makeDir(path) {
+    return new Promise((resolve, reject) => {
+      mkdirp(path, function(err) {
+        if(err) {
+          reject(err);
+        }
+        else {
+          resolve(path);
+        }
+      });
     });
   }
 
