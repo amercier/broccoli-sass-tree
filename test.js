@@ -39,4 +39,20 @@ describe('broccoli-sass', () => {
       'my_app.css': 'html body {\n  font: Helvetica; }\n'
     });
   });
+
+  it('preserves directory structure', () => {
+    const inputNode = new fixture.Node({
+        'app1.scss': 'html { body { font: Helvetica; } }',
+        'subdir': {
+          'app2.scss': '@import "../app1";'
+        }
+      }),
+      node = new BroccoliSass([inputNode]);
+    return expect(fixture.build(node)).to.eventually.deep.equal({
+      'app1.css': 'html body {\n  font: Helvetica; }\n',
+      'subdir': {
+        'app2.css': 'html body {\n  font: Helvetica; }\n'
+      }
+    });
+  });
 });
