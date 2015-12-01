@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import BroccoliSass from './index.es6';
+import BroccoliSass from './index';
 import fixture from 'broccoli-fixture';
 import { default as chai, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
