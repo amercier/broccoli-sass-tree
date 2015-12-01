@@ -61,7 +61,7 @@ export default class SassDir extends Plugin {
     ])
     .then(([result]) => {
       const tasks = [this.writeFile(outputFilePath, result.css)];
-      if (this.sassOptions.sourceMap) {
+      if (this.sassOptions.sourceMap && !this.sassOptions.sourceMapEmbed) {
         const outputMapFilePath = join(outputPath, this.getOutputMapPath(relativePath));
         tasks.push(this.writeFile(outputMapFilePath, result.map));
       }
