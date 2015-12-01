@@ -4,6 +4,7 @@ import BroccoliSass from './index';
 import fixture from 'broccoli-fixture';
 import { default as chai, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
+import { Promise } from 'rsvp';
 
 chai.use(chaiAsPromised);
 
@@ -82,5 +83,25 @@ describe('broccoli-sass-dir', () => {
       .that.match(/"file": "app\.css",/)
       .that.match(/"sources": /)
       .and.match(/"mappings": /);
+  });
+
+  it('generates inline sourcemaps', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+        sourceMapEmbed: true,
+      },
+    });
+
+    const result = fixture.build(node);
+    return Promise.all([
+      expect(result).to.eventually.not.have.property('app.map'),
+      expect(result).to.eventually
+        .have.property('app.css')
+        .that.match(/ sourceMappingURL=data:application\/json;base64,\w+= /),
+    ]);
   });
 });
