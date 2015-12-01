@@ -10,7 +10,7 @@ import { Promise } from 'rsvp';
 
 export default class SassDir extends Plugin {
 
-  constructor(inputNodes, options) {
+  constructor(inputNodes, options = {}) {
     super(inputNodes, options);
     this.options = options;
   }
@@ -68,7 +68,7 @@ export default class SassDir extends Plugin {
 
   renderSass(inputFilePath, outputFilePath) {
     return new Promise((resolve, reject) => {
-      const options = merge({}, this.options, {
+      const options = merge({}, this.options.sass, {
         file: inputFilePath,
         outFile: outputFilePath,
       });
