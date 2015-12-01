@@ -128,4 +128,20 @@ describe('broccoli-sass-dir', () => {
         .and.match(/html { body { font: Helvetica; } }/),
     ]);
   });
+
+  it('supports defining the source maps root', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+        sourceMapRoot: '/src/scss',
+      },
+    });
+
+    return expect(fixture.build(node)).to.eventually
+      .have.property('app.map')
+      .that.match(/"sourceRoot": "\/src\/scss"/);
+  });
 });
