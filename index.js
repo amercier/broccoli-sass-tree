@@ -12,7 +12,7 @@ export default class SassDir extends Plugin {
 
   constructor(inputNodes, options = {}) {
     super(inputNodes, options);
-    this.options = options;
+    this.sassOptions = options.sassOptions || {};
   }
 
   build() {
@@ -59,16 +59,27 @@ export default class SassDir extends Plugin {
       this.renderSass(inputFilePath, outputFilePath),
       this.makeDir(dirname(outputFilePath)),
     ])
-    .then(([result]) => this.writeFile(outputFilePath, result.css));
+    .then(([result]) => {
+      const tasks = [this.writeFile(outputFilePath, result.css)];
+      if (this.sassOptions.sourceMap) {
+        const outputMapFilePath = join(outputPath, this.getOutputMapPath(relativePath));
+        tasks.push(this.writeFile(outputMapFilePath, result.map));
+      }
+      return Promise.all(tasks);
+    });
   }
 
   getOutputCssPath(relativePath) {
     return relativePath.replace(/\.[^/.]+$/, '.css');
   }
 
+  getOutputMapPath(relativePath) {
+    return this.getOutputCssPath(relativePath).replace(/\.[^/.]+$/, '.map');
+  }
+
   renderSass(inputFilePath, outputFilePath) {
     return new Promise((resolve, reject) => {
-      const options = merge({}, this.options.sass, {
+      const options = merge({}, this.sassOptions, {
         file: inputFilePath,
         outFile: outputFilePath,
       });
