@@ -66,4 +66,21 @@ describe('broccoli-sass-dir', () => {
       Error, 'Invalid CSS after "...t: Helvetica; }": expected "{", was "]"'
     );
   });
+
+  it('generates .map sourcemaps', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+      },
+    });
+    return expect(fixture.build(node)).to.eventually
+      .have.property('app.map')
+      .that.match(/"version": 3,/)
+      .that.match(/"file": "app\.css",/)
+      .that.match(/"sources": /)
+      .and.match(/"mappings": /);
+  });
 });
