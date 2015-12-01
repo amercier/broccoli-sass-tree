@@ -79,6 +79,7 @@ describe('broccoli-sass-dir', () => {
     });
     return expect(fixture.build(node)).to.eventually
       .have.property('app.map')
+      .that.match(/\/app\.scss"/)
       .that.match(/"version": 3,/)
       .that.match(/"file": "app\.css",/)
       .that.match(/"sources": /)
@@ -102,6 +103,29 @@ describe('broccoli-sass-dir', () => {
       expect(result).to.eventually
         .have.property('app.css')
         .that.match(/ sourceMappingURL=data:application\/json;base64,\w+= /),
+    ]);
+  });
+
+  it('supports including the contents in the source maps information', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+        sourceMapContents: true,
+      },
+    });
+
+    const result = fixture.build(node);
+    return Promise.all([
+      expect(result).to.eventually
+        .have.property('app.map')
+        .that.not.match(/"app\.scss"/),
+      expect(result).to.eventually
+        .have.property('app.map')
+        .that.match(/"sourcesContent": /)
+        .and.match(/html { body { font: Helvetica; } }/),
     ]);
   });
 });
