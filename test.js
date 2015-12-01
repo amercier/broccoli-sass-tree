@@ -4,6 +4,7 @@ import BroccoliSass from './index';
 import fixture from 'broccoli-fixture';
 import { default as chai, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
+import { Promise } from 'rsvp';
 
 chai.use(chaiAsPromised);
 
@@ -65,5 +66,82 @@ describe('broccoli-sass-dir', () => {
     return expect(fixture.build(node)).to.eventually.be.rejectedWith(
       Error, 'Invalid CSS after "...t: Helvetica; }": expected "{", was "]"'
     );
+  });
+
+  it('generates .map sourcemaps', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+      },
+    });
+    return expect(fixture.build(node)).to.eventually
+      .have.property('app.map')
+      .that.match(/\/app\.scss"/)
+      .that.match(/"version": 3,/)
+      .that.match(/"file": "app\.css",/)
+      .that.match(/"sources": /)
+      .and.match(/"mappings": /);
+  });
+
+  it('generates inline sourcemaps', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+        sourceMapEmbed: true,
+      },
+    });
+
+    const result = fixture.build(node);
+    return Promise.all([
+      expect(result).to.eventually.not.have.property('app.map'),
+      expect(result).to.eventually
+        .have.property('app.css')
+        .that.match(/ sourceMappingURL=data:application\/json;base64,\w+= /),
+    ]);
+  });
+
+  it('supports including the contents in the source maps information', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+        sourceMapContents: true,
+      },
+    });
+
+    const result = fixture.build(node);
+    return Promise.all([
+      expect(result).to.eventually
+        .have.property('app.map')
+        .that.not.match(/"app\.scss"/),
+      expect(result).to.eventually
+        .have.property('app.map')
+        .that.match(/"sourcesContent": /)
+        .and.match(/html { body { font: Helvetica; } }/),
+    ]);
+  });
+
+  it('supports defining the source maps root', () => {
+    const inputNode = new fixture.Node({
+      'app.scss': 'html { body { font: Helvetica; } }',
+    });
+    const node = new BroccoliSass([inputNode], {
+      sassOptions: {
+        sourceMap: true,
+        sourceMapRoot: '/src/scss',
+      },
+    });
+
+    return expect(fixture.build(node)).to.eventually
+      .have.property('app.map')
+      .that.match(/"sourceRoot": "\/src\/scss"/);
   });
 });
