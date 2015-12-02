@@ -1,9 +1,9 @@
 {
   "name": "broccoli-sass-dir",
   "version": "0.0.0",
-  "main": "index.es5.js",
+  "main": "index.js",
   "scripts": {
-    "install": "babel index.js -o index.es5.js",
+    "install": "babel lib/index.js -o index.js",
     "test": "eslint . && babel-node ./node_modules/.bin/_mocha",
     "start": "eslint . && babel-node ./node_modules/.bin/_mocha --watch --growl"
   },
