@@ -1,4 +1,4 @@
-index.es5.js
-node_modules
-npm-debug.log
-tmp
+/index.js
+/node_modules
+/npm-debug.log
+/tmp
