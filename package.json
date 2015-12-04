@@ -4,8 +4,8 @@
   "main": "dist/index.js",
   "scripts": {
     "install": "babel lib -d dist",
-    "test": "eslint . && babel-node ./node_modules/.bin/_mocha",
-    "start": "eslint . && babel-node ./node_modules/.bin/_mocha --watch --growl"
+    "test": "eslint . && babel-node ./node_modules/.bin/babel-istanbul cover _mocha",
+    "start": "eslint . && babel-node ./node_modules/.bin/babel-istanbul test _mocha -- --watch --growl"
   },
   "dependencies": {
     "babel-cli": "^6.2.0",
@@ -18,9 +18,12 @@
     "rsvp": "^3.1.0"
   },
   "devDependencies": {
+    "babel-core": "^6.3.13",
+    "babel-istanbul": "^0.5.9",
     "broccoli-fixture": "^0.1.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
+    "codecov.io": "^0.1.6",
     "eslint": "^1.10.2",
     "eslint-config-airbnb": "^1.0.2",
     "mocha": "^2.3.4"

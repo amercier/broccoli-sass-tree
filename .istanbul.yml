@@ -1,0 +1,7 @@
+reporting:
+  print: detail
+  reports:
+  - lcovonly
+  - html
+  report-config:
+    html: { subdir: . }
