@@ -51,6 +51,8 @@
     "codecov.io": "^0.1.6",
     "eslint": "^1.10.2",
     "eslint-config-airbnb": "^1.0.2",
-    "mocha": "^2.3.4"
+    "fixturify": "^0.2.0",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2"
   }
 }
