@@ -9,6 +9,7 @@ cache:
   - node_modules
 after_success:
 - cat coverage/lcov.info | ./node_modules/.bin/codecov
+- cat coverage/lcov.info | ./node_modules/.bin/codeclimate-test-reporter
 deploy:
   provider: npm
   email: pro.alexandre.mercier@gmail.com
