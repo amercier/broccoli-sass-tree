@@ -15,8 +15,10 @@
   "main": "dist/SassRenderer.js",
   "scripts": {
     "prepublish": "rm -rf dist && babel lib -d dist",
-    "test": "eslint . && babel-node ./node_modules/.bin/babel-istanbul cover _mocha",
-    "start": "eslint . && babel-node ./node_modules/.bin/babel-istanbul test _mocha -- --watch --growl"
+    "lint": "eslint .",
+    "test": "mocha --compilers js:babel-register",
+    "start": "mocha --compilers js:babel-register --watch --growl",
+    "test-ci": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha"
   },
   "files": [
     "dist"
@@ -47,6 +49,7 @@
     "babel-core": "^6.3.13",
     "babel-istanbul": "^0.5.9",
     "babel-preset-es2015": "^6.1.18",
+    "babel-register": "^6.3.13",
     "broccoli-fixture": "^0.1.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
