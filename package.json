@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "install": "babel lib -d dist",
+    "prepublish": "rm -rf dist && babel lib -d dist",
     "test": "eslint . && babel-node ./node_modules/.bin/babel-istanbul cover _mocha",
     "start": "eslint . && babel-node ./node_modules/.bin/babel-istanbul test _mocha -- --watch --growl"
   },
