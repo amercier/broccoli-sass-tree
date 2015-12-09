@@ -12,7 +12,9 @@ after_success:
 deploy:
   provider: npm
   email: pro.alexandre.mercier@gmail.com
-  api_key: $NPM_AUTH_TOKEN
+  api_key:
+    # travis encrypt $(cat ~/.npmrc | grep _authToken | egrep -o '[^=]+$')
+    secure: nCNEZbEG52BnmwSccBxrCQ1wY4nq9aUzHsSR35rn/Uux1cUd3sExDuOvSxd31ehtr+w9RLuW/Os4mPdSplddQ9Wsut5Kf0IvcFcQl21YjMsu3SVdGHQtgfNstoa7vZw4UkQzZXvCAZeu6hQ8onsO80IZhLbgKQksJg4+CwBlBSQUr6M2dwN4F+kUbWDAzuelhyiEAqO3gceULu022ZRCSAcuYtnmzzTfPJEdhU44RFis9Ng1YvVBq/GjMXzFl8a1cjVWG6eEZXV8E1fVedO9N2OMAXCL4TZ6Tjbvxb4AGFH6k3iQKSKAW9ugFO5jlNVsps/ZETwzFeMkDMheuTcSq3wLwqjHvR5KDHgPAn21163Ej8BUjcXgc0VJtkdkkRLFYUdT4fvddZO/7R2X23x4/ll7tZ8qIqrnHH5E+XQHhMTbv5YZWo6nnJE2W2eaWb7/C0B/emOusrlnhG6naUyPsm5/eXQJ+sw8EyQjtqelaXsinCi6zYgzg20ZD23BUqRIIkh18984kysGEDMJkiYBemiZv26nBXvgouQxEmh7Vy8WP+qsILZ0bs2ZAeruQNbjZOZivISoKX9QDvyMRgn9mBxF6PrEwShx/lCLw1ZaVAQCoTcPnpb7GG4TKaITQoQMqhLVB+qvLhhetmSNsaFoeyF6rgHu9O9PUsxeFxyyF4M=
   on:
     tags: true
     condition: $(node -v | egrep v0.10 | wc -l) = 1
