@@ -3,7 +3,7 @@ language: node_js
 node_js:
 - 5.1 # Latest
 - 4.2 # LTS
-- 0.10
+- 0.1
 cache:
   directories:
   - node_modules
@@ -14,7 +14,8 @@ deploy:
   email: pro.alexandre.mercier@gmail.com
   api_key:
     # travis encrypt $(cat ~/.npmrc | grep _authToken | egrep -o '[^=]+$')
-    secure: nCNEZbEG52BnmwSccBxrCQ1wY4nq9aUzHsSR35rn/Uux1cUd3sExDuOvSxd31ehtr+w9RLuW/Os4mPdSplddQ9Wsut5Kf0IvcFcQl21YjMsu3SVdGHQtgfNstoa7vZw4UkQzZXvCAZeu6hQ8onsO80IZhLbgKQksJg4+CwBlBSQUr6M2dwN4F+kUbWDAzuelhyiEAqO3gceULu022ZRCSAcuYtnmzzTfPJEdhU44RFis9Ng1YvVBq/GjMXzFl8a1cjVWG6eEZXV8E1fVedO9N2OMAXCL4TZ6Tjbvxb4AGFH6k3iQKSKAW9ugFO5jlNVsps/ZETwzFeMkDMheuTcSq3wLwqjHvR5KDHgPAn21163Ej8BUjcXgc0VJtkdkkRLFYUdT4fvddZO/7R2X23x4/ll7tZ8qIqrnHH5E+XQHhMTbv5YZWo6nnJE2W2eaWb7/C0B/emOusrlnhG6naUyPsm5/eXQJ+sw8EyQjtqelaXsinCi6zYgzg20ZD23BUqRIIkh18984kysGEDMJkiYBemiZv26nBXvgouQxEmh7Vy8WP+qsILZ0bs2ZAeruQNbjZOZivISoKX9QDvyMRgn9mBxF6PrEwShx/lCLw1ZaVAQCoTcPnpb7GG4TKaITQoQMqhLVB+qvLhhetmSNsaFoeyF6rgHu9O9PUsxeFxyyF4M=
+    secure: I+7Of0ERxEEYl8lPiKtD03IfFeNc2Bu9p/I9hKwGJTxEhxAuH3vqFvyZeO7PGqgPNW+kb9JyX4Nm5i6gvNGLGsLP3TOoi+mE1u7/OddP9itRevlz0FeM0hTt9p32Ujmh9XNZ3wW/EZBbO5WmvErWblz1R1SuN4saYzv/jtokd/kFPWZkNNZSJEPHDPJMPDOERKYHmj+nS1Q71fieqnJfvhiiD28BJpgzIe9WUBDYjkBxJlO6HfKi9ey7YvmZ5GjYkAtQ6dz7DqGFCvVDcaBiKrVNwEIEh4OQCxbDngGA0HIkIOYi469ZaHXgndgAGK0cSNk5T2d0cf+MzY1CP1axFx52jQoqBow3XrJ9rWFZVzD6OOm79tj7xeCIdQTzl9zd9j8Co1DX49AYfxqSL1NH2WMnP2qeVuJbUQ8Qi2/7ihDwDtaVlyztAxdptSkr1KndIuJlkMWDw3B2dLXqbYf4+f93iI3z3NO+ohqk8+mWSJkQRlEKozdK0sHnxB+KJ+bE2+ESMXcXDVyegznMQ6++uy7CmI33l59EVbA+us0CAJLxrkuUGuwneCRI7B6bf6Tbty9SiCEYq4a+7EI5IBnw87SLpJGmmn8IZsPTawqjBm/4cz8S572EDkB0b+FLP46xIURjmTrC+KzWLqO1Bun6ZJ61+kyr3V1P6vV/SnDrLB4=
   on:
     tags: true
-    condition: $(node -v | egrep v0.10 | wc -l) = 1
+    repo: amercier/broccoli-sass-tree
+    condition: $(node -v | egrep v5.1 | wc -l) = 1
