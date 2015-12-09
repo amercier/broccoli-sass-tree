@@ -34,7 +34,6 @@
   ],
   "dependencies": {
     "broccoli-plugin": "^1.2.1",
-    "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
     "node-dir": "^0.1.11",
     "node-sass": "^3.4.2",
