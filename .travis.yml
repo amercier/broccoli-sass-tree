@@ -1,15 +1,19 @@
 sudo: false
 language: node_js
 node_js:
-- 5.1
-- 5.0
+- 5.2 # Latest
 - 4.2 # LTS
-- 4.1
-- 4.0
-- 0.12
-- 0.10
+- 0.1
 cache:
   directories:
   - node_modules
 after_success:
 - cat coverage/lcov.info | ./node_modules/.bin/codecov
+deploy:
+  provider: npm
+  email: pro.alexandre.mercier@gmail.com
+  api_key: $NPM_AUTH_TOKEN
+  on:
+    tags: true
+    repo: amercier/broccoli-sass-tree
+    condition: $(node -v | egrep v5.2 | wc -l) = 1
