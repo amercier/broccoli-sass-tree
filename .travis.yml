@@ -12,9 +12,7 @@ after_success:
 deploy:
   provider: npm
   email: pro.alexandre.mercier@gmail.com
-  api_key:
-    # travis encrypt $(cat ~/.npmrc | grep _authToken | egrep -o '[^=]+$')
-    secure: I+7Of0ERxEEYl8lPiKtD03IfFeNc2Bu9p/I9hKwGJTxEhxAuH3vqFvyZeO7PGqgPNW+kb9JyX4Nm5i6gvNGLGsLP3TOoi+mE1u7/OddP9itRevlz0FeM0hTt9p32Ujmh9XNZ3wW/EZBbO5WmvErWblz1R1SuN4saYzv/jtokd/kFPWZkNNZSJEPHDPJMPDOERKYHmj+nS1Q71fieqnJfvhiiD28BJpgzIe9WUBDYjkBxJlO6HfKi9ey7YvmZ5GjYkAtQ6dz7DqGFCvVDcaBiKrVNwEIEh4OQCxbDngGA0HIkIOYi469ZaHXgndgAGK0cSNk5T2d0cf+MzY1CP1axFx52jQoqBow3XrJ9rWFZVzD6OOm79tj7xeCIdQTzl9zd9j8Co1DX49AYfxqSL1NH2WMnP2qeVuJbUQ8Qi2/7ihDwDtaVlyztAxdptSkr1KndIuJlkMWDw3B2dLXqbYf4+f93iI3z3NO+ohqk8+mWSJkQRlEKozdK0sHnxB+KJ+bE2+ESMXcXDVyegznMQ6++uy7CmI33l59EVbA+us0CAJLxrkuUGuwneCRI7B6bf6Tbty9SiCEYq4a+7EI5IBnw87SLpJGmmn8IZsPTawqjBm/4cz8S572EDkB0b+FLP46xIURjmTrC+KzWLqO1Bun6ZJ61+kyr3V1P6vV/SnDrLB4=
+  api_key: $NPM_AUTH_TOKEN
   on:
     tags: true
     repo: amercier/broccoli-sass-tree
