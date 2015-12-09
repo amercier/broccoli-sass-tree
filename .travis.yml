@@ -19,3 +19,4 @@ deploy:
   api_key: $NPM_AUTH_TOKEN
   on:
     tags: true
+    condition: $(node -v | egrep v0.10 | wc -l) = 1
