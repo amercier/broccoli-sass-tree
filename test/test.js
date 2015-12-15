@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import BroccoliSass from '../lib/index';
+import BroccoliSass from '../lib/SassRenderer';
 import { build, Builder, Node } from 'broccoli-fixture';
 import { default as chai, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
@@ -112,7 +112,7 @@ describe('broccoli-sass-dir', () => {
       expect(result).to.eventually.not.have.property('app.map'),
       expect(result).to.eventually
         .have.property('app.css')
-        .that.match(/ sourceMappingURL=data:application\/json;base64,\w+= /),
+        .that.match(/ sourceMappingURL=data:application\/json;base64,\w+=+ /),
     ]);
   });
 
@@ -171,7 +171,7 @@ describe('broccoli-sass-dir', () => {
     return fixtureBuilder.build()
     .then(wait(1000))
     .then(() => {
-      spy(sass, 'renderSass');
+      spy(sass, 'render');
       writeSync(inputNode.outputPath, {
         'app1.scss': 'html { body { font: sans-serif; } }',
       });
@@ -206,7 +206,7 @@ describe('broccoli-sass-dir', () => {
     return fixtureBuilder.build()
     .then(wait(1000))
     .then(() => {
-      spy(sass, 'renderSass');
+      spy(sass, 'render');
       writeSync(inputNode.outputPath, {
         'app1.scss': 'html { body { font: sans-serif; } }',
       });
@@ -214,7 +214,7 @@ describe('broccoli-sass-dir', () => {
     })
     .then(() => sass.build())
     .then(() => {
-      expect(sass.renderSass.callCount).to.equal(2);
+      expect(sass.render.callCount).to.equal(2);
     });
   });
 });
