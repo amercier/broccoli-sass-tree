@@ -4,7 +4,7 @@ import BroccoliSass from '../lib/index';
 import { build, Builder, Node } from 'broccoli-fixture';
 import { default as chai, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { Promise } from 'rsvp';
+import Promise from 'bluebird';
 import { spy } from 'sinon';
 import { readSync, writeSync } from 'fixturify';
 
