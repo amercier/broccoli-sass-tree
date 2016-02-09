@@ -15,7 +15,7 @@
   "main": "dist/SassRenderer.js",
   "scripts": {
     "prepublish": "rm -rf dist && babel lib -d dist",
-    "test": "eslint . && istanbul cover _mocha -- --compilers js:babel-register",
+    "test": "eslint . && rm -rf coverage && istanbul cover _mocha -- --compilers js:babel-register",
     "start": "eslint . && mocha --compilers js:babel-register --watch --growl"
   },
   "files": [
