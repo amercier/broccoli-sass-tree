@@ -55,14 +55,14 @@ describe('broccoli-sass-dir', () => {
   it('preserves directory structure', () => {
     const inputNode = new Node({
       'app1.scss': 'html { body { font: Helvetica; } }',
-      'subdir': {
+      subdir: {
         'app2.scss': '@import "../app1";',
       },
     });
     const sass = new BroccoliSass([inputNode]);
     return expect(build(sass)).to.eventually.deep.equal({
       'app1.css': 'html body {\n  font: Helvetica; }\n',
-      'subdir': {
+      subdir: {
         'app2.css': 'html body {\n  font: Helvetica; }\n',
       },
     });
@@ -159,7 +159,7 @@ describe('broccoli-sass-dir', () => {
     const input = {
       'app1.scss': 'html { body { font: Helvetica; } }',
       'app2.scss': 'html { body { font: serif; } }',
-      'subdir': {
+      subdir: {
         'app3.scss': '@import "../app1";',
         'app4.scss': '@import "../app2";',
       },
@@ -182,7 +182,7 @@ describe('broccoli-sass-dir', () => {
       expect(readSync(sass.outputPath)).to.deep.equal({
         'app1.css': 'html body {\n  font: sans-serif; }\n',
         'app2.css': 'html body {\n  font: serif; }\n',
-        'subdir': {
+        subdir: {
           'app3.css': 'html body {\n  font: sans-serif; }\n',
           'app4.css': 'html body {\n  font: serif; }\n',
         },
@@ -194,7 +194,7 @@ describe('broccoli-sass-dir', () => {
     const input = {
       'app1.scss': 'html { body { font: Helvetica; } }',
       'app2.scss': 'html { body { font: serif; } }',
-      'subdir': {
+      subdir: {
         'app3.scss': '@import "../app1";',
         'app4.scss': '@import "../app2";',
       },
