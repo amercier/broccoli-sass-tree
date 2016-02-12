@@ -45,7 +45,7 @@
     "babel-cli": "^6.3.17",
     "babel-core": "^6.3.26",
     "babel-preset-es2015": "^6.3.13",
-    "babel-register": "^6.5.1",
+    "babel-register": "^6.5.2",
     "broccoli-fixture": "^0.1.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
