@@ -14,9 +14,10 @@
   },
   "main": "dist/SassRenderer.js",
   "scripts": {
+    "lint": "eslint .",
     "prepublish": "rm -rf dist && babel lib -d dist",
-    "test": "eslint . && rm -rf coverage && istanbul cover _mocha -- --compilers js:babel-register",
-    "start": "eslint . && mocha --compilers js:babel-register --watch --growl"
+    "test": "npm run lint && rm -rf coverage && istanbul cover _mocha -- --compilers js:babel-register",
+    "start": "npm run lint && mocha --compilers js:babel-register --watch --growl"
   },
   "files": [
     "dist"
@@ -51,8 +52,8 @@
     "chai-as-promised": "^5.2.0",
     "codeclimate-test-reporter": "^0.3.1",
     "codecov.io": "^0.1.6",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^5.0.0",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.0",
     "fixturify": "^0.2.0",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^2.3.4",
