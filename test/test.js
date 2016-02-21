@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint newline-per-chained-call:0 */
 
 import BroccoliSass from '../lib/SassRenderer';
 import { build, Builder, Node } from 'broccoli-fixture';
