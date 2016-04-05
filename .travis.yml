@@ -1,9 +1,9 @@
 sudo: false
 language: node_js
 node_js:
-- 5.5 # Latest
-- 4.2 # LTS
-- 0.1
+- 5.10 # Latest
+- 4.4 # LTS
+- 0.10 # Minimum supported
 cache:
   directories:
   - $HOME/.npm
