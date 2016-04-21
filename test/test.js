@@ -112,7 +112,7 @@ describe('broccoli-sass-dir', () => {
       expect(result).to.eventually.not.have.property('app.map'),
       expect(result).to.eventually
         .have.property('app.css')
-        .that.match(/ sourceMappingURL=data:application\/json;base64,\w+=+ /),
+        .that.match(/ sourceMappingURL=data:application\/json;base64,\w+ /),
     ]);
   });
 
