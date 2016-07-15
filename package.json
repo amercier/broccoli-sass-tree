@@ -51,7 +51,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "codeclimate-test-reporter": "^0.3.1",
-    "codecov.io": "^0.1.6",
+    "codecov.io": "^0.1.7",
     "eslint": "^3.0.0",
     "eslint-config-airbnb": "^7.0.0",
     "fixturify": "^0.2.0",
