@@ -1,12 +1,12 @@
 /* eslint-env mocha */
 
-import BroccoliSass from '../lib/SassRenderer';
 import { build, Builder, Node } from 'broccoli-fixture';
 import { default as chai, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import Promise from 'bluebird';
 import { spy } from 'sinon';
 import { readSync, writeSync } from 'fixturify';
+import BroccoliSass from '../../src/lib';
 
 chai.use(chaiAsPromised);
 

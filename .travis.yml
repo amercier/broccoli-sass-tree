@@ -1,22 +1,26 @@
 sudo: false
 language: node_js
-node_js:
-- 5.10 # Latest
-- 4.4 # LTS
-- 0.10 # Minimum supported
-cache:
-  directories:
-  - $HOME/.npm
-before_install: npm -g install npm@latest
-script: npm test -- --timeout 15000
+matrix:
+  include:
+  - node_js: 6.3 # Current
+    env: BUILD_DOCS=true REPORT_COVERAGE=true
+  - node_js: 4.4 # LTS
+    env: NPM_DEPLOY=true
+  - node_js: 4.0 # Minimum supported
+script:
+- npm test -- -- --timeout 10000
+- '[[ "$BUILD_DOCS" != true ]] || npm run doc' # Ensures ESDoc generation doesn't fail
 after_success:
-- cat coverage/lcov.info | ./node_modules/.bin/codecov
-- cat coverage/lcov.info | ./node_modules/.bin/codeclimate-test-reporter
+- '[[ "$REPORT_COVERAGE" != true ]] || cat coverage/lcov.info | ./node_modules/.bin/codecov'
+- '[[ "$REPORT_COVERAGE" != true ]] || cat coverage/lcov.info | ./node_modules/.bin/codeclimate-test-reporter'
 deploy:
   provider: npm
   email: pro.alexandre.mercier@gmail.com
   api_key: $NPM_AUTH_TOKEN
   on:
     tags: true
-    repo: amercier/broccoli-sass-tree
-    condition: $(node -v | egrep v5.2 | wc -l) = 1
+    repo: amercier/broccoli-sass-tree # Prevents publishing on PRs
+    condition: $NPM_DEPLOY = true # Prevents publishing on each matrix build
+cache:
+  directories:
+  - $HOME/.nvm
