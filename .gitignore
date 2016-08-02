@@ -1,5 +1,6 @@
+/.nyc_output
 /coverage
 /dist
+/esdoc
 /node_modules
-/npm-debug.log
-/tmp
+npm-debug.log
