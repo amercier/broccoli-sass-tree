@@ -50,7 +50,7 @@
     "broccoli-fixture": "^0.1.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "codeclimate-test-reporter": "^0.3.3",
+    "codeclimate-test-reporter": "^0.4.0",
     "codecov": "^1.0.1",
     "esdoc": "^0.4.7",
     "eslint": "^3.2.2",
